@@ -46,7 +46,7 @@ function generateTitleLinks(){
   const titleList = document.querySelector(optTitleListSelector); // znajduje linki i wrzucam pustaka ''
   titleList.innerHTML = '';
 
-  /* [IN PROGRESS] for each article */
+  /* [DONE] for each article */
   const articles = document.querySelectorAll(optArticleSelector);
   let html = '';
   for(let article of articles){
