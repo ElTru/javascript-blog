@@ -3,39 +3,31 @@
 const titleClickHandler = function(event){
   event.preventDefault();
   const clickedElement = this;
-
   /* [DONE] remove class 'active' from all article links  */
   const activeLinks = document.querySelectorAll('.titles a.active');
   for(let activeLink of activeLinks){
     activeLink.classList.remove('active');
   }
-
   /* [Done] add class 'active' to the clicked link */
   clickedElement.classList.add('active');
-
   /* [DONE] remove class 'active' from all articles */
   const activeArticles = document.querySelectorAll('.posts article.active');
   for(let activeArticle of activeArticles){
     activeArticle.classList.remove('active');
   }
-
   /* [DONE] get 'href' attribute from the clicked link */
-
   const articleSelector = clickedElement.getAttribute('href');
-
   /* [DONE] find the correct article using the selector (value of 'href' attribute) */
-
   const targetArticle = document.querySelector(articleSelector);
-
   /* [DONE] add class 'active' to the correct article */
-
   targetArticle.classList.add('active');
 }
 
 const optArticleSelector = '.post', // zawartośc artykułu
   optTitleSelector = '.post-title', // tytuły artykułów w poście
   optTitleListSelector = '.titles', // tytuły artykułów jako linki w linście
-  optArticleTagsSelector = '.post-tags .list'; // lista tagów w artykule
+  optArticleTagsSelector = '.post-tags .list', // lista tagów w artykule
+  optArticleAuthorSelector = '.post-author'; // autor w artykule
 
 const generateTitleLinks = function(customSelector = ''){
   /* [DONE] remove contents of titleList */ // wywalić lini z lewej kolumny
@@ -124,3 +116,52 @@ const addClickListenersToTags = function() {
 }
 
 addClickListenersToTags();
+
+const generateAuthors = function(){
+  /* [DONE] find all articles */
+  const articles = document.querySelectorAll(optArticleSelector);
+  /* [DONE] START LOOP: for every article: */
+  for(let article of articles){
+    const authorWrapper = article.querySelector(optArticleAuthorSelector);   //find author wrapper
+    let html = ''; // make html variable with empty string
+    const articleAuthor = article.getAttribute('data-author'); //get author from data-author attribute
+    const linkHTML = '<li><a href="#author-' + articleAuthor + '">' + articleAuthor  + '</a></li>';  // generate HTML of the link
+    html = html + linkHTML;  //add generated code to html variable
+    /* insert HTML of all the links into the tags wrapper */
+    authorWrapper.innerHTML = html;
+  } //END LOOP: for every article:
+}
+generateAuthors();
+
+const authorClickHandler = function(event){
+  /* [DONE] prevent default action for this event */
+  event.preventDefault();
+  /* [DONE] make new constant named "clickedElement" and give it the value of "this" */
+  const clickedElement = this;
+  /* [DONE] make a new constant "href" and read the attribute "href" of the clicked element */
+  const href = clickedElement.getAttribute('href');
+  const author = href.replace('#author-', ''); // pierwsza pozycja jest wymieniona na pustaka
+
+  /* [DONE] find all author links with class active */
+  const activeAuthorLinks = document.querySelectorAll('a.active[href^="#author-"]');
+  /* [DONE] START LOOP: for each active author link */
+  for(let activeAuthorLink of activeAuthorLinks){
+    activeAuthorLink.classList.remove('active'); // remove class active
+  }
+  /* [DONE] find all author links with "href" attribute equal to the "href" constant */
+  const foundAuthorLinks=document.querySelectorAll('a[href="' + href + '"]');
+  /* [DONE] START LOOP: for each found tag link */
+  for(let foundAuthorLink of foundAuthorLinks){
+    foundAuthorLink.classList.add('active'); // add class active
+  }
+  /* [DONE] execute function "generateTitleLinks" with article selector as argument */
+  generateTitleLinks('[data-author="' + author + '"]');
+}
+
+const addClickListenersToAuthors = function() {
+  const linkAuthors = document.querySelectorAll('a[href^="#author-"]');
+  for(let linkAuthor of linkAuthors){
+    linkAuthor.addEventListener('click', authorClickHandler);
+  }
+}
+addClickListenersToAuthors();

@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+li {
+  list-style-type: none;
+  height: 32px;
+}
+
 body {
   background: #fff;
   font-family: "Source Sans Pro", sans-serif;
@@ -61,7 +66,7 @@ body {
 .logo {
   font-family: "Sacramento", cursive;
   font-weight: 400;
-  font-size: 104px;
+  font-size: 56px;
   line-height: 1;
   text-align: center;
 }
