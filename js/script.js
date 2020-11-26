@@ -56,7 +56,6 @@ generateTitleLinks();
 const generateTags = function(){
   /* [NEW] create a new variable allTags with an empty object */
   let allTags = {};
-  console.log(allTags);
 
   /* [DONE] find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
@@ -65,11 +64,10 @@ const generateTags = function(){
     const tagWrapper = article.querySelector(optArticleTagsSelector);   //find tags wrapper
     let html = ''; // make html variable with empty string
     const articleTags = article.getAttribute('data-tags'); //get tags from data-tags attribute
-    const articleTagsArray = articleTags.split('   ');  //split tags into array !!! pamietaj o spacji
+    const articleTagsArray = articleTags.split(' ');  //split tags into array !!! pamietaj o spacji
+    console.log(articleTagsArray);
     /* [Done] START LOOP: for each tag */
-
       for(let tag of articleTagsArray){
-        console.log(tag);
         const linkHTML = '<li><a href="#tag-' + tag + '">' + tag  + '</a></li>';  // generate HTML of the link
         html = html + linkHTML;  //add generated code to html variable
         /* [NEW] check if this link is NOT already in allTags */
