@@ -82,24 +82,16 @@ const generateTags = function(){
   const articles = document.querySelectorAll(optArticleSelector);
   /* [DONE] START LOOP: for every article: */
   for(let article of articles){
-    const tagWrapper = article.querySelector(optArticleTagsSelector);   //find tags wrapper
-    let html = ''; // make html variable with empty string
     const articleTags = article.getAttribute('data-tags'); //get tags from data-tags attribute
     const articleTagsArray = articleTags.split(' ');  //split tags into array !!! pamietaj o spacji
     /* [Done] START LOOP: for each tag */
-      for(let tag of articleTagsArray){
-        const linkHTML = '<li><a href="#tag-' + tag + '">' + tag  + '</a></li>';  // generate HTML of the link
-        html = html + linkHTML;  //add generated code to html variable
-        /* [NEW] check if this link is NOT already in allTags */
-        if(!allTags[linkHTML]) {
-        /* [NEW] add tag to allTags object */
-          allTags[linkHTML] = 1;
-        } else {
-          allTags[linkHTML]++;
-        }
+    for(let tag of articleTagsArray){
+      if(!allTags[tag]) {
+        allTags[tag] = 1;
+      } else {
+        allTags[tag]++;
       }
-    /* insert HTML of all the links into the tags wrapper */
-    tagWrapper.innerHTML = html;
+    }
   }
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector('.tags');
@@ -111,9 +103,9 @@ const generateTags = function(){
     allTagsHTML += linkHTML + ' (' + allTags[linkHTML] + ') ';
   } */
   for (let tag in allTags) {
-    className: calculateTagClass(allTags[tag], tagsParams);
-    const tagLinkHTML = '<li>' + calculateTagClass(allTags[tag], tagsParams) + '</li>';
-    console.log('tagLinkHTML:', tagLinkHTML);
+    console.log(tag)
+    const className = calculateTagClass(allTags[tag], tagsParams);
+    const tagLinkHTML = '<li><a class="' + className + '" href="#tag-' + tag + '">' + tag + '(' + allTags[tag] + ')' + '</a></li>';
     allTagsHTML += tagLinkHTML;
   }
   /*[NEW] add HTML from allTagsHTML to tagList */
