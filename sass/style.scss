@@ -110,6 +110,7 @@ a:active {
 .list-horizontal {
   li {
     display: inline-block;
+    margin-right: 5px;
   }
 }
 
@@ -141,4 +142,24 @@ a:active {
   p {
     margin: 0 10px 0 0;
   }
+}
+
+/* List tags */
+.tag-size-1 {
+  font-size: 14px;
+}
+.tag-size-2 {
+  font-size: 18px;
+}
+.tag-size-3 {
+  font-size: 24px;
+}
+.tag-size-4 {
+  font-size: 32px;
+}
+.tag-size-5 {
+  font-size: 40px;
+}
+.list.tags li {
+  display: inline-block;
 }

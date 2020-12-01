@@ -1,4 +1,8 @@
 'use strict';
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML)
+}
 
 const optArticleSelector = '.post', // zawartośc artykułu
   optTitleSelector = '.post-title', // tytuły artykułów w poście
@@ -43,7 +47,8 @@ const generateTitleLinks = function(customSelector = ''){
   for(let article of articles){
     const articleId = article.getAttribute('id'); // get the article id
     const articleTitle = article.querySelector(optTitleSelector).innerHTML;   // find the title element
-    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>'; //get the title from the title element // create HTML of the link
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = templates.articleLink(linkHTMLData);
     html = html + linkHTML;  // insert link html variable
   }
   titleList.innerHTML = html;
@@ -86,6 +91,8 @@ const generateTags = function(){
     const articleTagsArray = articleTags.split(' ');  //split tags into array !!! pamietaj o spacji
     /* [Done] START LOOP: for each tag */
     for(let tag of articleTagsArray){
+      const linkHTMLData = { id: tag, title: tag };
+      const linkHTML = templates.tagLink(linkHTMLData);
       if(!allTags[tag]) {
         allTags[tag] = 1;
       } else {
@@ -103,7 +110,7 @@ const generateTags = function(){
     allTagsHTML += linkHTML + ' (' + allTags[linkHTML] + ') ';
   } */
   for (let tag in allTags) {
-    console.log(tag)
+    console.log(tag);
     const className = calculateTagClass(allTags[tag], tagsParams);
     const tagLinkHTML = '<li><a class="' + className + '" href="#tag-' + tag + '">' + tag + '(' + allTags[tag] + ')' + '</a></li>';
     allTagsHTML += tagLinkHTML;
